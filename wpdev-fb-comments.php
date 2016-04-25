@@ -3,7 +3,7 @@
  * Plugin Name: WP Developers Facebook Comments
  * Plugin URI: http://wpdevelopers.com
  * Description: Facebook comments by WP Developers.
- * Version: 1.3
+ * Version: 1.3.1
  * Author: Tyler Johnson
  * Author URI: http://tylerjohnsondesign.com
  * License: GPL2
@@ -165,6 +165,9 @@ class WPDevelopersFacebookComments {
 	}
 
     // Callbacks
+    public function wpdevelopers_facebook_comments_section_info() {
+	}
+    
 	public function enable_comments_0_callback() {
 		printf(
 			'<input type="checkbox" name="wpdevelopers_facebook_comments_option_name[enable_comments_0]" id="enable_comments_0" value="enable_comments_0" %s>',
@@ -212,9 +215,8 @@ class WPDevelopersFacebookComments {
 }
 
 // Enable Comment Options
-if ( is_admin() ) {
+if ( is_admin() )
 	$wpdevelopers_facebook_comments = new WPDevelopersFacebookComments();
-}
 
 
 /*--------------------
@@ -242,9 +244,10 @@ Admin Output
 function wpdev_fbcomments_admins() {
     global $wpdevfbadmins;
     global $wpdevfbenable;
+    $fbadmins = explode(',', $wpdevfbadmins);
     
     if(!empty($wpdevfbadmins) && !empty($wpdevfbenable)) {
-        foreach($wpdevfbadmins as $admin) {
+        foreach($fbadmins as $admin) {
             echo '<meta property="fb:admins" content"' . $admin . '" />
             ';
         }
