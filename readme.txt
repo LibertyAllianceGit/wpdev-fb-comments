@@ -26,6 +26,9 @@ Creates a shortcode and action for display Facebook comments on sites.
 
 == Changelog ==
 
+= 1.3.2
+* Backend border fix.
+
 = 1.3.1
 * Bug fixes for foreach argument and callback function.
 
