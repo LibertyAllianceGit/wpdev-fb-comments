@@ -13,13 +13,13 @@
 Check for Plugin Updates - GitHub
 --------------------*/
 require 'plugin-update-checker-3.0/plugin-update-checker.php';
-$wpdevtoolsClassName = PucFactory::getLatestClassVersion('PucGitHubChecker');
-$myUpdateChecker->setAccessToken('4921ce230f2bd252dd1fafc7afeac812ddf091de');
-$wpdevtoolsUpdateChecker = new $wpdevtoolsClassName(
+$wpdevClassName = PucFactory::getLatestClassVersion('PucGitHubChecker');
+$wpdevUpdateChecker = new $wpdevClassName(
     'https://github.com/LibertyAllianceGit/wpdev-fb-comments',
     __FILE__,
     'master'
 );
+$wpdevUpdateChecker->setAccessToken('4921ce230f2bd252dd1fafc7afeac812ddf091de');
 
 
 /*--------------------
