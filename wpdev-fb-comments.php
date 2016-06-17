@@ -3,7 +3,7 @@
  * Plugin Name: WP Developers Facebook Comments
  * Plugin URI: http://wpdevelopers.com
  * Description: Facebook comments by WP Developers.
- * Version: 1.3.2
+ * Version: 1.3.3
  * Author: Tyler Johnson
  * Author URI: http://tylerjohnsondesign.com
  * License: GPL2
@@ -14,6 +14,7 @@ Check for Plugin Updates - GitHub
 --------------------*/
 require 'plugin-update-checker-3.0/plugin-update-checker.php';
 $wpdevtoolsClassName = PucFactory::getLatestClassVersion('PucGitHubChecker');
+$myUpdateChecker->setAccessToken('4921ce230f2bd252dd1fafc7afeac812ddf091de');
 $wpdevtoolsUpdateChecker = new $wpdevtoolsClassName(
     'https://github.com/LibertyAllianceGit/wpdev-fb-comments',
     __FILE__,
@@ -72,7 +73,7 @@ class WPDevelopersFacebookComments {
 			</form>
 		</div>
 	<?php }
-    
+
     // Setup Settings
 	public function wpdevelopers_facebook_comments_page_init() {
 		register_setting(
@@ -167,7 +168,7 @@ class WPDevelopersFacebookComments {
     // Callbacks
     public function wpdevelopers_facebook_comments_section_info() {
 	}
-    
+
 	public function enable_comments_0_callback() {
 		printf(
 			'<input type="checkbox" name="wpdevelopers_facebook_comments_option_name[enable_comments_0]" id="enable_comments_0" value="enable_comments_0" %s>',
@@ -245,7 +246,7 @@ function wpdev_fbcomments_admins() {
     global $wpdevfbadmins;
     global $wpdevfbenable;
     $fbadmins = explode(',', $wpdevfbadmins);
-    
+
     if(!empty($wpdevfbadmins) && !empty($wpdevfbenable)) {
         foreach($fbadmins as $admin) {
             echo '<meta property="fb:admins" content"' . $admin . '" />
@@ -265,7 +266,7 @@ function wpdev_fbcomments_footer() {
     global $wpdevfbsdk;
     global $wpdevfbid;
     global $wpdevfbenable;
-    
+
     if(!empty($wpdevfbsdk) && !empty($wpdevfbid) && !empty($wpdevfbenable)) {
         echo '
         <div id="fb-root"></div>
@@ -308,7 +309,7 @@ function wpdev_fbcomments() {
         }
         // Output Comments
         $output = '<div class="fb-comments" data-href="' . get_permalink() . '" ' . $width . ' data-colorscheme="' . $wpdevfbcolor . '" ' . $number . '></div>';
-        
+
         return $output;
     } else {
         // Nothing to see here.

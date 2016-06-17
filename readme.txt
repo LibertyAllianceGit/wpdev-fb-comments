@@ -26,6 +26,9 @@ Creates a shortcode and action for display Facebook comments on sites.
 
 == Changelog ==
 
+= 1.3.3
+* Add Github Access Token.
+
 = 1.3.2
 * Backend border fix.
 
