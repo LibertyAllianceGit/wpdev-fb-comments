@@ -25,6 +25,8 @@ Creates a shortcode and action for display Facebook comments on sites.
 == Screenshots ==
 
 == Changelog ==
+= 1.3.4
+* Update Facebook JS code to version 2.7.
 
 = 1.3.3
 * Add Github Access Token.
