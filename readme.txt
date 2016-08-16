@@ -25,6 +25,10 @@ Creates a shortcode and action for display Facebook comments on sites.
 == Screenshots ==
 
 == Changelog ==
+
+= 1.4.3
+* Bug fix for dumb Facebook update.
+
 = 1.4.2
 * Bug fix dos.
 
