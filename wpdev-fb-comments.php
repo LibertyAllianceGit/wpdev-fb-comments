@@ -13,7 +13,7 @@
 Check for Plugin Updates on GitHub
 **/
 // Require Plugin Update Files
-require 'plugin-update-checker-3.0/plugin-update-checker.php';
+require 'plugin-update-checker/plugin-update-checker.php';
 
 // Setup Plugin Update Args
 $wpdevClassName = PucFactory::getLatestClassVersion('PucGitHubChecker');
