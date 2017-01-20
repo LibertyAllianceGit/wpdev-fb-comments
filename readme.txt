@@ -26,6 +26,13 @@ Creates a shortcode and action for display Facebook comments on sites.
 
 == Changelog ==
 
+= 1.5.0
+* Cleaned and ordered code.
+* Updated output of Facebook SDK code to current standards.
+* Added shortcode to display Facebook comment count.
+* Added support for Facebook Comment mirroring.
+* Removed moderator field and replaced with Facebook App ID control, in order to work with comment mirroring.
+
 = 1.4.3
 * Bug fix for dumb Facebook update.
 

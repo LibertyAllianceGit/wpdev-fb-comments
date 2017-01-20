@@ -3,16 +3,19 @@
  * Plugin Name: WP Developers Facebook Comments
  * Plugin URI: http://wpdevelopers.com
  * Description: Facebook comments by WP Developers.
- * Version: 1.4.3
+ * Version: 1.5.0
  * Author: Tyler Johnson
  * Author URI: http://tylerjohnsondesign.com
  * License: GPL2
  */
 
-/*--------------------
-Check for Plugin Updates - GitHub
---------------------*/
+/**
+Check for Plugin Updates on GitHub
+**/
+// Require Plugin Update Files
 require 'plugin-update-checker-3.0/plugin-update-checker.php';
+
+// Setup Plugin Update Args
 $wpdevClassName = PucFactory::getLatestClassVersion('PucGitHubChecker');
 $wpdevUpdateChecker = new $wpdevClassName(
     'https://github.com/LibertyAllianceGit/wpdev-fb-comments',
@@ -20,22 +23,18 @@ $wpdevUpdateChecker = new $wpdevClassName(
     'master'
 );
 
-
-/*--------------------
+/**
 Enqueue Plugin Files
---------------------*/
-
+**/
 function wpdev_facebook_comments_admin_cssjs() {
-        wp_enqueue_style( 'wpdev-fb-admin-css', plugin_dir_url(__FILE__) . 'inc/wpdev-fb-comments-admin-css.css' );
-        wp_enqueue_script( 'wpdev-fb-admin-js', plugin_dir_url( __FILE__ ) . 'inc/wpdev-fb-comments-admin-js.js', array('jquery') );
+  wp_enqueue_style('wpdev-fb-admin-css', plugin_dir_url(__FILE__) . 'inc/wpdev-fb-comments-admin-css.css');
+  wp_enqueue_script('wpdev-fb-admin-js', plugin_dir_url(__FILE__) . 'inc/wpdev-fb-comments-admin-js.js', array('jquery'), '1.0');
 }
-add_action( 'admin_enqueue_scripts', 'wpdev_facebook_comments_admin_cssjs' );
+add_action('admin_enqueue_scripts', 'wpdev_facebook_comments_admin_cssjs');
 
-
-/*--------------------
+/**
 Plugin Options
---------------------*/
-
+**/
 class WPDevelopersFacebookComments {
 	private $wpdevelopers_facebook_comments_options;
 
@@ -128,13 +127,6 @@ class WPDevelopersFacebookComments {
 			'wpdevelopers-facebook-comments-admin', // page
 			'wpdevelopers_facebook_comments_setting_section' // section
 		);
-		add_settings_field(
-			'facebook_admins_comma_separated_list_6', // id
-			'Facebook Admins<span class="wpdev-fb-label">Enter a comma separated list of admin profile IDs. Admins can get their profile Facebook IDs <a href="//findmyfbid.com/" target="_blank">here</a>.</span>', // title
-			array( $this, 'facebook_admins_comma_separated_list_6_callback' ), // callback
-			'wpdevelopers-facebook-comments-admin', // page
-			'wpdevelopers_facebook_comments_setting_section' // section
-		);
 	}
 
     // Sanitize & Clean Options
@@ -157,9 +149,6 @@ class WPDevelopersFacebookComments {
 		}
 		if ( isset( $input['number_of_comments_5'] ) ) {
 			$sanitary_values['number_of_comments_5'] = sanitize_text_field( $input['number_of_comments_5'] );
-		}
-		if ( isset( $input['facebook_admins_comma_separated_list_6'] ) ) {
-			$sanitary_values['facebook_admins_comma_separated_list_6'] = esc_textarea( $input['facebook_admins_comma_separated_list_6'] );
 		}
 		return $sanitary_values;
 	}
@@ -206,12 +195,6 @@ class WPDevelopersFacebookComments {
 			isset( $this->wpdevelopers_facebook_comments_options['number_of_comments_5'] ) ? esc_attr( $this->wpdevelopers_facebook_comments_options['number_of_comments_5']) : ''
 		);
 	}
-	public function facebook_admins_comma_separated_list_6_callback() {
-		printf(
-			'<textarea class="large-text" rows="5" name="wpdevelopers_facebook_comments_option_name[facebook_admins_comma_separated_list_6]" id="facebook_admins_comma_separated_list_6">%s</textarea>',
-			isset( $this->wpdevelopers_facebook_comments_options['facebook_admins_comma_separated_list_6'] ) ? esc_attr( $this->wpdevelopers_facebook_comments_options['facebook_admins_comma_separated_list_6']) : ''
-		);
-	}
 }
 
 // Enable Comment Options
@@ -219,12 +202,11 @@ if ( is_admin() )
 	$wpdevelopers_facebook_comments = new WPDevelopersFacebookComments();
 
 
-/*--------------------
-Load Comment Options
---------------------*/
-
+/**
+Setup Comment Option Variables
+**/
 // Get Options
-$wpdevfb = get_option( 'wpdevelopers_facebook_comments_option_name' );
+$wpdevfb = get_option('wpdevelopers_facebook_comments_option_name');
 
 // Divide Options
 $wpdevfbenable = $wpdevfb['enable_comments_0'];
@@ -233,34 +215,20 @@ $wpdevfbid = $wpdevfb['facebook_app_id_2'];
 $wpdevfbcolor = $wpdevfb['color_scheme_3'];
 $wpdevfbwidth = $wpdevfb['width_default_100_4'];
 $wpdevfbnum = $wpdevfb['number_of_comments_5'];
-$wpdevfbadmins = $wpdevfb['facebook_admins_comma_separated_list_6'];
 
+/**
+App ID Output
+**/
+function wpdev_fbcomments_appid() {
+    global $wpdevfbid;
 
-/*--------------------
-Admin Output
---------------------*/
-
-// Add Facebook Admins
-function wpdev_fbcomments_admins() {
-    global $wpdevfbadmins;
-    global $wpdevfbenable;
-    $fbadmins = explode(',', $wpdevfbadmins);
-
-    if(!empty($wpdevfbadmins) && !empty($wpdevfbenable)) {
-        foreach($fbadmins as $admin) {
-            echo '<meta property="fb:admins" content="' . $admin . '" />
-            ';
-        }
-    } else {
-        // Nothing to see here.
-    }
+    echo '<meta property="fb:app_id" content="' . $wpdevfbid . '"/>';
 }
-add_action('wp_head', 'wpdev_fbcomments_admins');
+add_action('wp_head', 'wpdev_fbcomments_appid', 10);
 
-
-/*--------------------
+/**
 SDK Output
---------------------*/
+**/
 function wpdev_fbcomments_footer() {
     global $wpdevfbsdk;
     global $wpdevfbid;
@@ -273,7 +241,7 @@ function wpdev_fbcomments_footer() {
           var js, fjs = d.getElementsByTagName(s)[0];
           if (d.getElementById(id)) return;
           js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=' . $wpdevfbid . '";
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=' . $wpdevfbid . '";
           fjs.parentNode.insertBefore(js, fjs);
         }(document, \'script\', \'facebook-jssdk\'));</script>';
     } else {
@@ -283,10 +251,9 @@ function wpdev_fbcomments_footer() {
 add_action('wp_footer', 'wpdev_fbcomments_footer');
 
 
-/*--------------------
+/**
 Comments Output
---------------------*/
-
+**/
 function wpdev_fbcomments() {
     global $wpdevfbenable;
     global $wpdevfbcolor;
@@ -300,6 +267,7 @@ function wpdev_fbcomments() {
         } else {
             $width = 'data-width="auto" ';
         }
+        // Get Post Count
         if(!empty($wpdevfbnum)) {
             $number = 'data-numposts="' . $wpdevfbnum . '" ';
         } else {
@@ -315,3 +283,37 @@ function wpdev_fbcomments() {
 }
 add_shortcode('wpdevfb', 'wpdev_fbcomments');
 add_action('wpdevfb', 'wpdev_fbcomments');
+
+/**
+Comment Count Output
+**/
+function wpdev_fbcomments_comment_count($atts = []) {
+  // Normalize attribute keys
+  $atts = array_change_key_case((array)$atts, CASE_LOWER);
+
+  // Default attributes
+  $fbatts = shortcode_atts([
+    'id' => '',
+  ], $atts);
+
+  // Setup Variables
+  if(!empty($fbatts)) {
+    $url = get_permalink($fbatts['id']);
+  } elseif(is_single()) {
+    $url = get_permalink();
+  } else {
+    $url = ''; // Nothing.
+  }
+
+  // Output
+  $output = '';
+  if(!empty($fbatts) || is_single()) {
+    $output .= '<fb:comments-count href="' . $url . '"></fb:comments-count>';
+  } else {
+    $output .= '';
+  }
+
+  return $output;
+}
+add_shortcode('wpdevfbcnt', 'wpdev_fbcomments_comment_count');
+add_action('wpdevfbcnt', 'wpdev_fbcomments_comment_count');
