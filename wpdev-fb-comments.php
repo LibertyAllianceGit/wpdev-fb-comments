@@ -283,37 +283,3 @@ function wpdev_fbcomments() {
 }
 add_shortcode('wpdevfb', 'wpdev_fbcomments');
 add_action('wpdevfb', 'wpdev_fbcomments');
-
-/**
-Comment Count Output
-**/
-function wpdev_fbcomments_comment_count($atts = []) {
-  // Normalize attribute keys
-  $atts = array_change_key_case((array)$atts, CASE_LOWER);
-
-  // Default attributes
-  $fbatts = shortcode_atts([
-    'id' => '',
-  ], $atts);
-
-  // Setup Variables
-  if(!empty($fbatts)) {
-    $url = get_permalink($fbatts['id']);
-  } elseif(is_single()) {
-    $url = get_permalink();
-  } else {
-    $url = ''; // Nothing.
-  }
-
-  // Output
-  $output = '';
-  if(!empty($fbatts) || is_single()) {
-    $output .= '<fb:comments-count href="' . $url . '"></fb:comments-count>';
-  } else {
-    $output .= '';
-  }
-
-  return $output;
-}
-add_shortcode('wpdevfbcnt', 'wpdev_fbcomments_comment_count');
-add_action('wpdevfbcnt', 'wpdev_fbcomments_comment_count');
