@@ -26,6 +26,9 @@ Creates a shortcode and action for display Facebook comments on sites.
 
 == Changelog ==
 
+= 1.5.1
+* Plugin updater bug fix.
+
 = 1.5.0
 * Cleaned and ordered code.
 * Updated output of Facebook SDK code to current standards.

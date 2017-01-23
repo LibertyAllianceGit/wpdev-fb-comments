@@ -1,16 +1,14 @@
 <?php
 
-if ( !class_exists('PucReadmeParser', false) ):
-
 /**
  * This is a slightly modified version of github.com/markjaquith/WordPress-Plugin-Readme-Parser
  * It uses Parsedown instead of the "Markdown Extra" parser.
  */
 
-class PucReadmeParser {
+Class PucReadmeParser {
 
 	function __construct() {
-		// This space intentionally blank
+		// This space intentially blank
 	}
 
 	function parse_readme( $file ) {
@@ -122,7 +120,7 @@ class PucReadmeParser {
 
 		$sections = array();
 		for ( $i=1; $i <= count($_sections); $i +=2 ) {
-			$_sections[$i] = preg_replace('/(^[\s]*)=[\s]+(.+?)[\s]+=/m', '$1<h4>$2</h4>', $_sections[$i]);
+			$_sections[$i] = preg_replace('/^[\s]*=[\s]+(.+?)[\s]+=/m', '<h4>$1</h4>', $_sections[$i]);
 			$_sections[$i] = $this->filter_text( $_sections[$i], true );
 			$title = $this->sanitize_text( $_sections[$i-1] );
 			$sections[str_replace(' ', '_', strtolower($title))] = array('title' => $title, 'content' => $_sections[$i]);
@@ -240,8 +238,7 @@ class PucReadmeParser {
 
 		if ( $markdown ) { // Parse markdown.
 			if ( !class_exists('Parsedown', false) ) {
-				/** @noinspection PhpIncludeInspection */
-				require_once(dirname(__FILE__) . '/Parsedown' . (version_compare(PHP_VERSION, '5.3.0', '>=') ? '' : 'Legacy') . '.php');
+				require_once(dirname(__FILE__) . '/Parsedown.php');
 			}
 			$instance = Parsedown::instance();
 			$text = $instance->text($text);
@@ -331,4 +328,4 @@ class PucReadmeParser {
 
 } // end class
 
-endif;
+Class Automattic_Readme extends PucReadmeParser {}
