@@ -3,7 +3,7 @@
  * Plugin Name: WP Developers Facebook Comments
  * Plugin URI: http://wpdevelopers.com
  * Description: Facebook comments by WP Developers.
- * Version: 1.5.1
+ * Version: 1.6.0
  * Author: Tyler Johnson
  * Author URI: http://tylerjohnsondesign.com
  * License: GPL2
@@ -59,7 +59,7 @@ class WPDevelopersFacebookComments {
 
 		<div class="wrap wpdev-fb-wrap">
 			<h2 class="wpdev-fb-logo-head"><img src="<?php echo plugin_dir_url(__FILE__) . 'inc/wpdev-fb-comments-logo.png'; ?>" alt="WPDevelopers Facebook Comments"/></h2>
-			<p>To display the comments, please use either <code>echo do_shortcode('[wpdevfb]');</code> or <code>do_action('wpdevfb');</code>.</p>
+			<p>To display the comments, please use either <code>echo do_shortcode('[wpdevfb]');</code> or <code>do_action('wpdevfb');</code>. You can also display Facebook comment counts by using <code>echo do_shortcode('[wpdevfbcount]');</code>.</p>
 			<?php settings_errors(); ?>
 			<form method="post" action="options.php">
 				<?php
@@ -214,23 +214,18 @@ $wpdevfbcolor = $wpdevfb['color_scheme_3'];
 $wpdevfbwidth = $wpdevfb['width_default_100_4'];
 $wpdevfbnum = $wpdevfb['number_of_comments_5'];
 
-/**
-App ID Output
-**/
-function wpdev_fbcomments_appid() {
-    global $wpdevfbid;
-
-    echo '<meta property="fb:app_id" content="' . $wpdevfbid . '"/>';
-}
-add_action('wp_head', 'wpdev_fbcomments_appid', 10);
 
 /**
 SDK Output
 **/
-function wpdev_fbcomments_footer() {
+function wpdev_fbcomments_header() {
     global $wpdevfbsdk;
     global $wpdevfbid;
     global $wpdevfbenable;
+
+    if(!empty($wpdevfbenable) && !empty($wpdevfbid)) {
+      echo '<meta property="fb:app_id" content="' . $wpdevfbid . '"/>';
+    }
 
     if(!empty($wpdevfbsdk) && !empty($wpdevfbid) && !empty($wpdevfbenable)) {
         echo '
@@ -246,7 +241,7 @@ function wpdev_fbcomments_footer() {
         // Nothing to see here.
     }
 }
-add_action('wp_footer', 'wpdev_fbcomments_footer');
+add_action('wp_head', 'wpdev_fbcomments_header', 55);
 
 
 /**
@@ -281,3 +276,20 @@ function wpdev_fbcomments() {
 }
 add_shortcode('wpdevfb', 'wpdev_fbcomments');
 add_action('wpdevfb', 'wpdev_fbcomments');
+
+
+/**
+Comment Count Output
+**/
+function wpdev_fbcomments_count() {
+  global $wpdevfbenable;
+
+  if(!empty($wpdevfbenable)) {
+    $output = '<div class="wpdevfb-comment-count">"<span class="fb-comments-count" data-href="' . get_permalink(get_the_id()) . '"></span> comments</div>';
+  } else {
+    $output = ''; // Nothing.
+  }
+
+  return $output;
+}
+add_shortcode('wpdevfbcount', 'wpdev_fbcomments_count');
