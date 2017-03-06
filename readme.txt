@@ -26,6 +26,9 @@ Creates a shortcode and action for display Facebook comments on sites.
 
 == Changelog ==
 
+= 1.6.1 =
+* Head priority update for less conflicts.
+
 = 1.6.0
 * Updated SDK so that it's output in head for faster loading.
 * Added wpdevfbcount to output Facebook comment counts.
