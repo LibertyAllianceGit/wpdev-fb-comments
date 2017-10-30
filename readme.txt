@@ -26,6 +26,9 @@ Creates a shortcode and action for display Facebook comments on sites.
 
 == Changelog ==
 
+= 1.6.3 =
+* Added HTTPS switch support.
+
 = 1.6.2 =
 * Updating API to 2.9 from 2.8.
 

@@ -3,7 +3,7 @@
  * Plugin Name: WP Developers Facebook Comments
  * Plugin URI: http://wpdevelopers.com
  * Description: Facebook comments by WP Developers.
- * Version: 1.6.2
+ * Version: 1.6.3
  * Author: Tyler Johnson
  * Author URI: http://tylerjohnsondesign.com
  * License: GPL2
@@ -247,11 +247,22 @@ add_action('wp_head', 'wpdev_fbcomments_header');
 /**
 Comments Output
 **/
-function wpdev_fbcomments() {
+function wpdev_fbcomments( $atts ) {
     global $wpdevfbenable;
     global $wpdevfbcolor;
     global $wpdevfbwidth;
     global $wpdevfbnum;
+    
+    $atts = shortcode_atts(
+		array(
+			'switch' => '',
+        ), $atts, 'wpdevfb'
+    );
+    
+    // HTTPS Check Variables
+    $switch = explode('-', $atts['switch']);
+    $date = $switch[0].$switch[1].$switch[3];
+    $post = get_the_date('Ymd');
 
     if(!empty($wpdevfbenable)) {
         // Get Width
@@ -266,8 +277,16 @@ function wpdev_fbcomments() {
         } else {
             $number = 'data-numposts="10" ';
         }
+        
+        // Check for HTTPS Switch
+        if(!empty($switch) && $post > $date) {
+            $url = str_replace('https', 'http', get_permalink());
+        } else {
+            $url = get_permalink();
+        }
+        
         // Output Comments
-        $output = '<div class="fb-comments" data-href="' . get_permalink() . '" ' . $width . ' data-colorscheme="' . $wpdevfbcolor . '" ' . $number . '></div>';
+        $output = '<div class="fb-comments" data-href="' . $url . '" ' . $width . ' data-colorscheme="' . $wpdevfbcolor . '" ' . $number . '></div>';
 
         return $output;
     } else {
