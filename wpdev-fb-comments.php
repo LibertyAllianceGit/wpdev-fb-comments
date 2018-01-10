@@ -3,7 +3,7 @@
  * Plugin Name: WP Developers Facebook Comments
  * Plugin URI: http://wpdevelopers.com
  * Description: Facebook comments by WP Developers.
- * Version: 1.6.4
+ * Version: 1.6.5
  * Author: Tyler Johnson
  * Author URI: http://tylerjohnsondesign.com
  * License: GPL2
@@ -14,11 +14,10 @@ Check for Plugin Updates on GitHub
 **/
 // Require Plugin Update Files
 require 'plugin-update-checker-3.0/plugin-update-checker.php';
-$wpdevClassName = PucFactory::getLatestClassVersion('PucGitHubChecker');
-$wpdevUpdateChecker = new $wpdevClassName(
-    'https://github.com/LibertyAllianceGit/wpdev-fb-comments',
-    __FILE__,
-    'master'
+$wpdevUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://github.com/LibertyAllianceGit/wpdev-fb-comments',
+	__FILE__,
+	'wpdev-fb-comments'
 );
 
 /**
