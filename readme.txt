@@ -26,6 +26,9 @@ Creates a shortcode and action for display Facebook comments on sites.
 
 == Changelog ==
 
+= 1.6.4 =
+* PHP7 compatibility fix.
+
 = 1.6.3 =
 * Added HTTPS switch support.
 
