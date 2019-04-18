@@ -26,6 +26,12 @@ Creates a shortcode and action for display Facebook comments on sites.
 
 == Changelog ==
 
+= 2.0.3 =
+* Removed the count option.
+
+= 2.0.2 =
+* Bug fix.
+
 = 2.0.1 =
 * Bug fix.
 

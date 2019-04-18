@@ -47,7 +47,7 @@ function wpdev_fbcomments() {
         }
 
         // Setup the output.
-        $output = '<div class="fb-comments" data-href="'.$url.'" data-numposts="'.$num.'"></div>';
+        $output = '<div class="fb-comments" data-href="'.$url.'" data-numposts="6"></div>';
     } else {
         $output = '';
     }
