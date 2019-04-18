@@ -27,7 +27,7 @@ class WPDevelopersFacebookComments {
 		$this->wpdevelopers_facebook_comments_options = get_option('wpdevelopers_facebook_comments_option_name'); ?>
 
 		<div class="wrap wpdev-fb-wrap">
-			<h2 class="wpdev-fb-logo-head"><img src="<?php echo WPDEVFB_BASE_PATH.'assets/wpdev-fb-comments-logo.png'; ?>" alt="WPDevelopers Facebook Comments"/></h2>
+			<h2 class="wpdev-fb-logo-head"><img src="<?php echo WPDEVFB_BASE_URI.'assets/wpdev-fb-comments-logo.png'; ?>" alt="WPDevelopers Facebook Comments"/></h2>
 			<p>To display the comments, please use either <code>echo do_shortcode('[wpdevfb]');</code> or <code>do_action('wpdevfb');</code>. You can also display Facebook comment counts by using <code>echo do_shortcode('[wpdevfbcount]');</code>.</p>
 			<?php settings_errors(); ?>
 			<form method="post" action="options.php">
