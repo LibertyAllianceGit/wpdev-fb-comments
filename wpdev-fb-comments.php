@@ -3,7 +3,7 @@
 Plugin Name: WP Developers Facebook Comments
 Plugin URI: http://wpdevelopers.com
 Description: Facebook comments by WP Developers.
-Version: 2.0.0
+Version: 2.0.1
 Author: Tyler Johnson
 Author URI: http://tylerjohnsondesign.com
 License: GPL2
@@ -44,7 +44,7 @@ require_once(WPDEVFB_BASE_PATH.'admin/settings.php');
 Enqueue Plugin Files
 **/
 function wpdev_facebook_comments_admin_enqueue() {
-  wp_enqueue_style('wpdev-fb-admin-css', WPDEVFB_BASE_PATH.'assets/wpdev-fb-comments-admin-css.css', '', WPDEVFB_BASE_VERSION);
-  wp_enqueue_script('wpdev-fb-admin-js', WPDEVFB_BASE_PATH.'assets/wpdev-fb-comments-admin-js.js', array('jquery'), WPDEVFB_BASE_VERSION);
+  wp_enqueue_style('wpdev-fb-admin-css', WPDEVFB_BASE_URI.'assets/wpdev-fb-comments-admin-css.css', '', WPDEVFB_BASE_VERSION);
+  wp_enqueue_script('wpdev-fb-admin-js', WPDEVFB_BASE_URI.'assets/wpdev-fb-comments-admin-js.js', array('jquery'), WPDEVFB_BASE_VERSION);
 }
 add_action('admin_enqueue_scripts', 'wpdev_facebook_comments_admin_enqueue');
